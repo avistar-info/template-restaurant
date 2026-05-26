@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>__NOM_RESTAURANT__ — Avis Google</title>
+  <meta name="description" content="Laissez un avis Google pour __NOM_RESTAURANT__, __TYPE_CUISINE__ à __ARRONDISSEMENT__. Votre avis compte !">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#D4A853">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #FDF8F0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      width: 100%;
+      background: linear-gradient(135deg, #D4A853 0%, #B8873A 100%);
+      padding: 32px 24px 24px;
+      text-align: center;
+      color: white;
+    }
+    .header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .header .type {
+      font-size: 15px;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      margin: -16px 16px 0;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      width: calc(100% - 32px);
+      max-width: 480px;
+    }
+    .stars-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .note-big {
+      font-size: 42px;
+      font-weight: 800;
+      color: #D4A853;
+      line-height: 1;
+    }
+    .stars-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .stars {
+      color: #F5C518;
+      font-size: 22px;
+      letter-spacing: 2px;
+    }
+    .nb-avis {
+      font-size: 13px;
+      color: #888;
+    }
+    .progress-bar {
+      background: #F0EBE0;
+      border-radius: 99px;
+      height: 8px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #D4A853, #F5C518);
+      border-radius: 99px;
+      width: __NOTE_PCT__%;
+      transition: width 1s ease;
+    }
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: #555;
+    }
+    .info-row .icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      width: 24px;
+    }
+    .divider {
+      height: 1px;
+      background: #F0EBE0;
+      margin: 16px 0;
+    }
+    .cta-section {
+      padding: 20px 16px 32px;
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+    }
+    .cta-label {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .cta-label strong {
+      color: #333;
+    }
+    .btn-review {
+      display: block;
+      background: linear-gradient(135deg, #D4A853 0%, #B8873A 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 16px;
+      padding: 18px 24px;
+      font-size: 18px;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(212,168,83,0.4);
+      transition: transform 0.15s, box-shadow 0.15s;
+      letter-spacing: 0.3px;
+    }
+    .btn-review:active {
+      transform: scale(0.97);
+      box-shadow: 0 3px 12px rgba(212,168,83,0.3);
+    }
+    .btn-sub {
+      font-size: 13px;
+      opacity: 0.85;
+      margin-top: 4px;
+      font-weight: 400;
+    }
+    .qr-section {
+      padding: 8px 16px 24px;
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+    }
+    .qr-section p {
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+    .qr-section img {
+      width: 100px;
+      height: 100px;
+      border-radius: 8px;
+      opacity: 0.6;
+    }
+    .footer {
+      padding: 16px;
+      text-align: center;
+      font-size: 11px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>__NOM_RESTAURANT__</h1>
+    <div class="type">__TYPE_CUISINE__ · __ARRONDISSEMENT__</div>
+  </div>
+
+  <div class="card">
+    <div class="stars-row">
+      <div class="note-big">__NOTE_GOOGLE__</div>
+      <div class="stars-col">
+        <div class="stars">★★★★★</div>
+        <div class="nb-avis">__NB_AVIS__ avis Google</div>
+      </div>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+
+    <div class="info-row">
+      <span class="icon">📍</span>
+      <span>__ADRESSE__</span>
+    </div>
+    <div class="divider"></div>
+    <div class="info-row">
+      <span class="icon">🕐</span>
+      <span>__HORAIRES__</span>
+    </div>
+    <div class="divider"></div>
+    <div class="info-row">
+      <span class="icon">📞</span>
+      <span>__TELEPHONE__</span>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <p class="cta-label">
+      Vous avez aimé votre expérience ?<br>
+      <strong>Laissez-nous un avis Google en 30 secondes !</strong>
+    </p>
+    <a href="__LIEN_GOOGLE_REVIEW__" class="btn-review" target="_blank" rel="noopener">
+      ⭐ Laisser un avis Google
+      <div class="btn-sub">Ça nous aide énormément, merci !</div>
+    </a>
+  </div>
+
+  <div class="qr-section">
+    <p>Scanner pour accéder à cette page</p>
+    <img src="qr.png" alt="QR Code __NOM_RESTAURANT__" onerror="this.style.display='none'">
+  </div>
+
+  <div class="footer">
+    Page créée par AviStars · avistars.fr
+  </div>
+</body>
+</html>
