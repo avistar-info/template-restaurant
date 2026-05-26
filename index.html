@@ -293,8 +293,9 @@
       </div>
 
       <!-- 5. SERVEUR -->
-      <div class="fsec">
+      <div class="fsec" id="fsec-serveur">
         <div class="flabel" id="t-serveur-label"></div>
+        <div class="chips-wrap" id="chips-serveur" style="display:none;flex-wrap:wrap;gap:8px"></div>
         <input type="text" class="finput" id="serveurNom" autocomplete="off">
       </div>
 
@@ -571,7 +572,20 @@ var lang = 'fr';
 var landingNote = 0;
 var formNote = 0;
 var catNotes = {cuisine:0,service:0,ambiance:0,proprete:0};
-var chipSel = {repas:null,budget:null,bruit:null,attente:null};
+var chipSel = {repas:null,budget:null,bruit:null,attente:null,serveur:null};
+    // Initialiser chips serveur si configurés
+    var SERVEURS_CFG = '__SERVEURS__';
+    if (SERVEURS_CFG && SERVEURS_CFG.indexOf('__') === -1) {
+      var srvNames = SERVEURS_CFG.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+      if (srvNames.length > 0) {
+        var srvWrap = document.getElementById('chips-serveur');
+        srvWrap.style.display = 'flex';
+        srvWrap.innerHTML = srvNames.map(function(n){
+          return '<div class="chip" onclick="toggleChip(\'serveur\',this)">' + n + '</div>';
+        }).join('');
+        document.getElementById('serveurNom').style.display = 'none';
+      }
+    }
 var contactMode = 'email';
 
 /* ── LANG DETECT ── */
@@ -796,7 +810,7 @@ function submitForm(){
     date_visite:document.getElementById('selectMois').value + '/' + document.getElementById('selectAnnee').value,
     type_repas:chipSel.repas,
     budget:chipSel.budget,
-    serveur:document.getElementById('serveurNom').value.trim(),
+    serveur:chipSel.serveur || document.getElementById('serveurNom').value.trim(),
     bruit:chipSel.bruit,
     attente:chipSel.attente,
     contact_type:contactMode,
