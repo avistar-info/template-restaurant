@@ -2,221 +2,843 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>__NOM_RESTAURANT__ — Avis Google</title>
-  <meta name="description" content="Laissez un avis Google pour __NOM_RESTAURANT__, __TYPE_CUISINE__ à __ARRONDISSEMENT__. Votre avis compte !">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#D4A853">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>__NOM_RESTAURANT__ — Votre avis</title>
+  <link rel="manifest" href="./manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="__NOM_RESTAURANT__">
+  <meta name="theme-color" content="#1a0a00">
+  <link rel="preload" as="image" href="./restaurant.jpg" fetchpriority="high">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #FDF8F0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .header {
-      width: 100%;
-      background: linear-gradient(135deg, #D4A853 0%, #B8873A 100%);
-      padding: 32px 24px 24px;
-      text-align: center;
-      color: white;
-    }
-    .header h1 {
-      font-size: 26px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      line-height: 1.2;
-    }
-    .header .type {
-      font-size: 15px;
-      opacity: 0.9;
-      font-weight: 400;
-    }
-    .card {
-      background: white;
-      border-radius: 20px;
-      margin: -16px 16px 0;
-      padding: 24px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      width: calc(100% - 32px);
-      max-width: 480px;
-    }
-    .stars-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-    .note-big {
-      font-size: 42px;
-      font-weight: 800;
-      color: #D4A853;
-      line-height: 1;
-    }
-    .stars-col {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .stars {
-      color: #F5C518;
-      font-size: 22px;
-      letter-spacing: 2px;
-    }
-    .nb-avis {
-      font-size: 13px;
-      color: #888;
-    }
-    .progress-bar {
-      background: #F0EBE0;
-      border-radius: 99px;
-      height: 8px;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #D4A853, #F5C518);
-      border-radius: 99px;
-      width: __NOTE_PCT__%;
-      transition: width 1s ease;
-    }
-    .info-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 12px;
-      font-size: 14px;
-      color: #555;
-    }
-    .info-row .icon {
-      font-size: 18px;
-      flex-shrink: 0;
-      width: 24px;
-    }
-    .divider {
-      height: 1px;
-      background: #F0EBE0;
-      margin: 16px 0;
-    }
-    .cta-section {
-      padding: 20px 16px 32px;
-      width: 100%;
-      max-width: 480px;
-      text-align: center;
-    }
-    .cta-label {
-      font-size: 15px;
-      color: #666;
-      margin-bottom: 16px;
-      line-height: 1.5;
-    }
-    .cta-label strong {
-      color: #333;
-    }
-    .btn-review {
-      display: block;
-      background: linear-gradient(135deg, #D4A853 0%, #B8873A 100%);
-      color: white;
-      text-decoration: none;
-      border-radius: 16px;
-      padding: 18px 24px;
-      font-size: 18px;
-      font-weight: 700;
-      box-shadow: 0 6px 20px rgba(212,168,83,0.4);
-      transition: transform 0.15s, box-shadow 0.15s;
-      letter-spacing: 0.3px;
-    }
-    .btn-review:active {
-      transform: scale(0.97);
-      box-shadow: 0 3px 12px rgba(212,168,83,0.3);
-    }
-    .btn-sub {
-      font-size: 13px;
-      opacity: 0.85;
-      margin-top: 4px;
-      font-weight: 400;
-    }
-    .qr-section {
-      padding: 8px 16px 24px;
-      width: 100%;
-      max-width: 480px;
-      text-align: center;
-    }
-    .qr-section p {
-      font-size: 12px;
-      color: #aaa;
-      margin-bottom: 10px;
-    }
-    .qr-section img {
-      width: 100px;
-      height: 100px;
-      border-radius: 8px;
-      opacity: 0.6;
-    }
-    .footer {
-      padding: 16px;
-      text-align: center;
-      font-size: 11px;
-      color: #ccc;
-    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#1a0a00}
+
+    /* ── HERO ── */
+    .hero{position:fixed;inset:0;z-index:0}
+    .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 72%}
+    .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.12) 0%,rgba(0,0,0,.38) 38%,rgba(0,0,0,.74) 65%,rgba(0,0,0,.93) 100%)}
+
+    /* ── LANG SWITCHER ── */
+    .lang-switcher{position:fixed;top:16px;right:16px;z-index:100;display:flex;gap:3px;background:rgba(255,255,255,.14);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:22px;padding:4px;border:1px solid rgba(255,255,255,.22)}
+    .lang-btn{background:none;border:none;color:rgba(255,255,255,.65);font-size:11px;font-weight:700;padding:5px 9px;border-radius:18px;cursor:pointer;transition:all .2s;letter-spacing:.5px}
+    .lang-btn.active{background:rgba(255,255,255,.92);color:#1a1a1a}
+
+    /* ── CONTAINER ── */
+    .container{position:relative;z-index:10;height:100vh;height:100dvh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 18px 36px}
+
+    /* ── RESTAURANT INFO ── */
+    .restaurant-info{margin-bottom:18px;opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+    .restaurant-info.visible{opacity:1;transform:translateY(0)}
+    .restaurant-name{font-size:30px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:4px;text-shadow:0 2px 12px rgba(0,0,0,.5);letter-spacing:-.3px}
+    .restaurant-meta{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:8px}
+    .rating-row{display:flex;align-items:center;gap:6px}
+    .rating-stars{position:relative;display:inline-block;font-size:15px;letter-spacing:1px}
+    .rating-stars-bg{color:rgba(255,255,255,.3)}
+    .rating-stars-fill{position:absolute;top:0;left:0;overflow:hidden;color:#FFB800;white-space:nowrap}
+
+    /* ── CARD ── */
+    .card{background:rgba(255,255,255,.97);border-radius:22px;padding:24px 20px 22px;opacity:0;transform:translateY(30px);transition:opacity .7s ease .25s,transform .7s ease .25s}
+    .card.visible{opacity:1;transform:translateY(0)}
+    .greeting{font-size:11px;font-weight:700;color:#9B6A3A;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px}
+    .question{font-size:21px;font-weight:800;color:#1a1a1a;line-height:1.25;margin-bottom:5px}
+    .subtext{font-size:13px;color:#999;margin-bottom:22px}
+
+    /* ── LANDING STARS ── */
+    .landing-stars{display:flex;justify-content:center;gap:6px;margin-bottom:10px}
+    .lstar{font-size:46px;color:#e0e0e0;cursor:pointer;background:none;border:none;line-height:1;padding:2px;user-select:none;-webkit-user-select:none;transition:color .12s,transform .1s}
+    .lstar:active{transform:scale(.88)}
+    .landing-hint{text-align:center;font-size:13px;color:#888;min-height:18px;font-style:italic;margin-bottom:4px;transition:opacity .2s}
+
+    .thanks-msg{text-align:center;font-size:14px;color:#1e8e3e;font-weight:700;min-height:18px;opacity:0;transition:opacity .35s}
+    .thanks-msg.show{opacity:1}
+
+    /* ── LOADER ── */
+    .loader{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;pointer-events:none;transition:opacity .5s}
+    .loader-dots{display:flex;gap:8px}
+    .loader-dot{width:9px;height:9px;background:rgba(255,255,255,.85);border-radius:50%;animation:ldBounce 1.2s infinite ease-in-out}
+    .loader-dot:nth-child(2){animation-delay:.2s}
+    .loader-dot:nth-child(3){animation-delay:.4s}
+    @keyframes ldBounce{0%,60%,100%{transform:translateY(0);opacity:.7}30%{transform:translateY(-13px);opacity:1}}
+
+    /* ── OVERLAY + SHEET ── */
+    .form-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.52);opacity:0;pointer-events:none;transition:opacity .3s}
+    .form-overlay.active{opacity:1;pointer-events:all}
+    .form-sheet{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:24px 24px 0 0;max-height:90vh;max-height:90dvh;overflow-y:auto;transform:translateY(100%);transition:transform .4s cubic-bezier(.32,.72,0,1);overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+    .form-overlay.active .form-sheet{transform:translateY(0)}
+    .form-handle{width:38px;height:4px;background:#e5e5e5;border-radius:2px;margin:14px auto 0}
+
+    /* ── FORM HEADER ── */
+    .form-header{padding:20px 22px 16px;border-bottom:1px solid #f0f0f0;text-align:center}
+    .form-restaurant{font-size:12px;color:#aaa;margin-bottom:2px}
+    .form-title{font-size:20px;font-weight:800;color:#1a1a1a}
+    .form-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:24px;color:#bbb;cursor:pointer;line-height:1;padding:4px}
+
+    /* ── SECTION WRAPPER ── */
+    .fsec{padding:18px 22px;border-bottom:1px solid #f0f0f0}
+    .fsec:last-of-type{border-bottom:none}
+    .flabel{font-size:13px;font-weight:600;color:#3c4043;margin-bottom:12px}
+    .flabel .req{color:#d93025}
+
+    /* ── GLOBAL STARS ── */
+    .fstars-row{display:flex;justify-content:center;gap:8px;margin-bottom:6px}
+    .fstar{font-size:44px;color:#e0e0e0;cursor:pointer;background:none;border:none;line-height:1;padding:2px;transition:color .1s;user-select:none;-webkit-user-select:none}
+    .fstar-hint{text-align:center;font-size:14px;color:#5f6368;min-height:20px;font-style:italic}
+
+    /* ── CAT STARS ── */
+    .cat-grid{display:flex;flex-direction:column;gap:0}
+    .cat-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f8f8f8}
+    .cat-row:last-child{border-bottom:none}
+    .cat-name{font-size:15px;color:#3c4043}
+    .cat-stars{display:flex;gap:3px}
+    .cstar{font-size:26px;color:#e0e0e0;cursor:pointer;background:none;border:none;padding:9px 6px;line-height:1;transition:color .1s;user-select:none;-webkit-user-select:none}
+
+    /* ── TEXTAREA ── */
+    .review-textarea{width:100%;padding:14px;border:1.5px solid #dadce0;border-radius:8px;font-size:15px;color:#202124;resize:none;outline:none;font-family:inherit;min-height:110px;background:#fff;transition:border-color .2s;-webkit-appearance:none}
+    .review-textarea:focus{border-color:#1a73e8}
+    .char-count{text-align:right;font-size:11px;color:#bbb;margin-top:4px}
+
+    /* ── DATE SELECTS ── */
+    .date-row{display:flex;gap:10px}
+    .fselect{flex:1;border:1.5px solid #dadce0;border-radius:8px;padding:12px 10px;font-family:inherit;font-size:15px;color:#202124;outline:none;-webkit-appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235f6368' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") no-repeat right 12px center;cursor:pointer;transition:border-color .2s}
+    .fselect:focus{border-color:#1a73e8}
+
+    /* ── TEXT INPUT ── */
+    .finput{width:100%;border:1.5px solid #dadce0;border-radius:8px;padding:13px 14px;font-family:inherit;font-size:16px;color:#202124;outline:none;transition:border-color .2s;-webkit-appearance:none;background:#fff}
+    .finput:focus{border-color:#1a73e8}
+
+    /* ── CHIPS ── */
+    .chips-wrap{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{padding:8px 16px;border:1.5px solid #dadce0;border-radius:20px;font-size:14px;color:#3c4043;cursor:pointer;background:#fff;transition:all .15s;user-select:none;font-family:inherit;white-space:nowrap}
+    .chip.sel{border-color:#1a73e8;background:#e8f0fe;color:#1a73e8;font-weight:600}
+
+    /* ── CONTACT ── */
+    .ctoggle{display:flex;gap:8px;margin-bottom:12px}
+    .ctbtn{flex:1;padding:10px;border:1.5px solid #dadce0;border-radius:8px;font-size:14px;font-weight:500;color:#5f6368;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+    .ctbtn.active{border-color:#1a73e8;background:#e8f0fe;color:#1a73e8}
+
+    /* ── RGPD ── */
+    .rgpd-label{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:#5f6368;cursor:pointer;line-height:1.5}
+    .rgpd-label input[type=checkbox]{margin-top:2px;flex-shrink:0;width:17px;height:17px;accent-color:#1a73e8;cursor:pointer}
+
+    /* ── SUBMIT ── */
+    .btn-submit{width:100%;padding:16px;background:#1a73e8;color:#fff;border:none;border-radius:100px;font-size:16px;font-weight:700;cursor:pointer;min-height:54px;transition:background .15s;font-family:inherit;letter-spacing:.3px}
+    .btn-submit:active:not(:disabled){background:#1557b0}
+    .btn-submit:disabled{background:#e8e8e8;color:#bbb;cursor:not-allowed}
+
+    /* ── SUCCESS ── */
+    .success-state{display:none;text-align:center;padding:52px 24px 60px}
+    .success-state.visible{display:block}
+    .success-icon{font-size:60px;margin-bottom:16px}
+    .success-title{font-size:21px;font-weight:800;color:#1a1a1a;margin-bottom:8px}
+    .success-text{font-size:14px;color:#777;line-height:1.5;margin-bottom:24px}
+    .success-cta{display:inline-block;margin-top:4px;padding:13px 28px;background:#1a1a1a;color:#fff;border-radius:100px;font-size:14px;font-weight:700;text-decoration:none;letter-spacing:.3px}
+    .form-body.hidden{display:none}
+    .btn-submit.loading{background:#5ba0f0;pointer-events:none}
+    .btn-submit.loading::after{content:' ···';letter-spacing:2px}
+
+    /* ── I18N ── */
+    [data-lang]{display:none}
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1>__NOM_RESTAURANT__</h1>
-    <div class="type">__TYPE_CUISINE__ · __ARRONDISSEMENT__</div>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="./restaurant.jpg" alt="__NOM_RESTAURANT__" fetchpriority="high">
+</div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-dots">
+    <div class="loader-dot"></div>
+    <div class="loader-dot"></div>
+    <div class="loader-dot"></div>
+  </div>
+</div>
+
+<!-- LANG SWITCHER -->
+<div class="lang-switcher">
+  <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">FR</button>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" id="btn-de" onclick="setLang('de')">DE</button>
+  <button class="lang-btn" id="btn-it" onclick="setLang('it')">IT</button>
+  <button class="lang-btn" id="btn-zh" onclick="setLang('zh')">中文</button>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+  <div class="restaurant-info" id="ri">
+    <div class="restaurant-name">__NOM_RESTAURANT__</div>
+    <div class="restaurant-meta">__TYPE_CUISINE__ &middot; __ARRONDISSEMENT__ &mdash; __HORAIRES__</div>
+    <div class="rating-row">
+      <span class="rating-stars">
+        <span class="rating-stars-bg">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <span class="rating-stars-fill" style="width:__NOTE_PCT__%">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      </span>
+      <span style="font-size:13px;font-weight:700;color:#fff;margin-left:6px">__NOTE_GOOGLE__</span>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="stars-row">
-      <div class="note-big">__NOTE_GOOGLE__</div>
-      <div class="stars-col">
-        <div class="stars">★★★★★</div>
-        <div class="nb-avis">__NB_AVIS__ avis Google</div>
+  <div class="card" id="card">
+    <div class="greeting" id="t-greeting"></div>
+    <div class="question" id="t-question"></div>
+    <div class="subtext" id="t-subtext"></div>
+
+    <div class="landing-stars" id="landingStars">
+      <button class="lstar" id="ls1" onclick="landingStar(1)">&#9733;</button>
+      <button class="lstar" id="ls2" onclick="landingStar(2)">&#9733;</button>
+      <button class="lstar" id="ls3" onclick="landingStar(3)">&#9733;</button>
+      <button class="lstar" id="ls4" onclick="landingStar(4)">&#9733;</button>
+      <button class="lstar" id="ls5" onclick="landingStar(5)">&#9733;</button>
+    </div>
+    <div class="landing-hint" id="landingHint">&nbsp;</div>
+    <div class="thanks-msg" id="thanksMsg"></div>
+  </div>
+</div>
+
+<!-- BOTTOM SHEET -->
+<div class="form-overlay" id="overlay" onclick="overlayClick(event)">
+  <div class="form-sheet" id="sheet">
+    <div class="form-handle"></div>
+
+    <div class="success-state" id="success">
+      <div class="success-icon">&#128591;</div>
+      <div class="success-title" id="t-success-title"></div>
+      <div class="success-text" id="t-success-text"></div>
+    </div>
+
+    <div class="form-body" id="form-body">
+
+      <!-- HEADER -->
+      <div class="form-header" style="position:relative">
+        <div class="form-restaurant">__NOM_RESTAURANT__</div>
+        <div class="form-title" id="t-form-title"></div>
+        <button class="form-close" onclick="closeForm()">&#215;</button>
       </div>
-    </div>
-    <div class="progress-bar">
-      <div class="progress-fill"></div>
-    </div>
 
-    <div class="info-row">
-      <span class="icon">📍</span>
-      <span>__ADRESSE__</span>
-    </div>
-    <div class="divider"></div>
-    <div class="info-row">
-      <span class="icon">🕐</span>
-      <span>__HORAIRES__</span>
-    </div>
-    <div class="divider"></div>
-    <div class="info-row">
-      <span class="icon">📞</span>
-      <span>__TELEPHONE__</span>
+      <!-- 1. NOTE GLOBALE -->
+      <div class="fsec" style="text-align:center;padding-top:24px;padding-bottom:18px">
+        <div class="fstars-row">
+          <button class="fstar" id="fs1" onclick="setFStar(1)">&#9733;</button>
+          <button class="fstar" id="fs2" onclick="setFStar(2)">&#9733;</button>
+          <button class="fstar" id="fs3" onclick="setFStar(3)">&#9733;</button>
+          <button class="fstar" id="fs4" onclick="setFStar(4)">&#9733;</button>
+          <button class="fstar" id="fs5" onclick="setFStar(5)">&#9733;</button>
+        </div>
+        <div class="fstar-hint" id="fstar-hint"></div>
+      </div>
+
+      <!-- 2. CATEGORIES -->
+      <div class="fsec">
+        <div class="cat-grid">
+          <div class="cat-row">
+            <div class="cat-name" id="c-cuisine-lbl"></div>
+            <div class="cat-stars" id="cat-cuisine">
+              <button class="cstar" onclick="setCat('cuisine',1)">&#9733;</button>
+              <button class="cstar" onclick="setCat('cuisine',2)">&#9733;</button>
+              <button class="cstar" onclick="setCat('cuisine',3)">&#9733;</button>
+              <button class="cstar" onclick="setCat('cuisine',4)">&#9733;</button>
+              <button class="cstar" onclick="setCat('cuisine',5)">&#9733;</button>
+            </div>
+          </div>
+          <div class="cat-row">
+            <div class="cat-name" id="c-service-lbl"></div>
+            <div class="cat-stars" id="cat-service">
+              <button class="cstar" onclick="setCat('service',1)">&#9733;</button>
+              <button class="cstar" onclick="setCat('service',2)">&#9733;</button>
+              <button class="cstar" onclick="setCat('service',3)">&#9733;</button>
+              <button class="cstar" onclick="setCat('service',4)">&#9733;</button>
+              <button class="cstar" onclick="setCat('service',5)">&#9733;</button>
+            </div>
+          </div>
+          <div class="cat-row">
+            <div class="cat-name" id="c-ambiance-lbl"></div>
+            <div class="cat-stars" id="cat-ambiance">
+              <button class="cstar" onclick="setCat('ambiance',1)">&#9733;</button>
+              <button class="cstar" onclick="setCat('ambiance',2)">&#9733;</button>
+              <button class="cstar" onclick="setCat('ambiance',3)">&#9733;</button>
+              <button class="cstar" onclick="setCat('ambiance',4)">&#9733;</button>
+              <button class="cstar" onclick="setCat('ambiance',5)">&#9733;</button>
+            </div>
+          </div>
+          <div class="cat-row">
+            <div class="cat-name" id="c-proprete-lbl"></div>
+            <div class="cat-stars" id="cat-proprete">
+              <button class="cstar" onclick="setCat('proprete',1)">&#9733;</button>
+              <button class="cstar" onclick="setCat('proprete',2)">&#9733;</button>
+              <button class="cstar" onclick="setCat('proprete',3)">&#9733;</button>
+              <button class="cstar" onclick="setCat('proprete',4)">&#9733;</button>
+              <button class="cstar" onclick="setCat('proprete',5)">&#9733;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. COMMENTAIRE -->
+      <div class="fsec">
+        <textarea class="review-textarea" id="review-text" maxlength="2000" oninput="onTextInput()"></textarea>
+        <div class="char-count"><span id="char-count">0</span> / 2000</div>
+      </div>
+
+      <!-- 4. DATE -->
+      <div class="fsec">
+        <div class="flabel" id="t-date-label"></div>
+        <div class="date-row">
+          <select class="fselect" id="selectMois"></select>
+          <select class="fselect" id="selectAnnee"></select>
+        </div>
+      </div>
+
+      <!-- 5. SERVEUR -->
+      <div class="fsec">
+        <div class="flabel" id="t-serveur-label"></div>
+        <input type="text" class="finput" id="serveurNom" autocomplete="off">
+      </div>
+
+      <!-- 6. TYPE DE REPAS -->
+      <div class="fsec">
+        <div class="flabel" id="t-meal-label"></div>
+        <div class="chips-wrap" id="chips-repas">
+          <div class="chip" onclick="toggleChip('repas',this)" data-fr="Petit-dejeuner" data-en="Breakfast" data-es="Desayuno" data-de="Fr&#252;hst&#252;ck" data-it="Colazione" data-zh="&#26089;&#39278;"></div>
+          <div class="chip" onclick="toggleChip('repas',this)" data-fr="Brunch" data-en="Brunch" data-es="Brunch" data-de="Brunch" data-it="Brunch" data-zh="&#26089;&#21320;&#39278;"></div>
+          <div class="chip" onclick="toggleChip('repas',this)" data-fr="Dejeuner" data-en="Lunch" data-es="Almuerzo" data-de="Mittagessen" data-it="Pranzo" data-zh="&#21320;&#39278;"></div>
+          <div class="chip" onclick="toggleChip('repas',this)" data-fr="Diner" data-en="Dinner" data-es="Cena" data-de="Abendessen" data-it="Cena" data-zh="&#26202;&#39278;"></div>
+          <div class="chip" onclick="toggleChip('repas',this)" data-fr="Autre" data-en="Other" data-es="Otro" data-de="Sonstiges" data-it="Altro" data-zh="&#20854;&#20182;"></div>
+        </div>
+      </div>
+
+      <!-- 7. BUDGET -->
+      <div class="fsec">
+        <div class="flabel" id="t-budget-label"></div>
+        <div class="chips-wrap" id="chips-budget">
+          <div class="chip" onclick="toggleChip('budget',this)">1&#8211;20&euro;</div>
+          <div class="chip" onclick="toggleChip('budget',this)">20&#8211;40&euro;</div>
+          <div class="chip" onclick="toggleChip('budget',this)">40&#8211;60&euro;</div>
+          <div class="chip" onclick="toggleChip('budget',this)">60&#8211;80&euro;</div>
+          <div class="chip" onclick="toggleChip('budget',this)">80&#8211;100&euro;</div>
+          <div class="chip" onclick="toggleChip('budget',this)">+100&euro;</div>
+        </div>
+      </div>
+
+      <!-- 8. BRUIT -->
+      <div class="fsec">
+        <div class="flabel" id="t-bruit-label"></div>
+        <div class="chips-wrap" id="chips-bruit">
+          <div class="chip" onclick="toggleChip('bruit',this)" data-fr="Calme" data-en="Quiet" data-es="Tranquilo" data-de="Ruhig" data-it="Silenzioso" data-zh="&#23433;&#38745;"></div>
+          <div class="chip" onclick="toggleChip('bruit',this)" data-fr="Mod&#233;r&#233;" data-en="Moderate" data-es="Moderado" data-de="M&#228;&#223;ig" data-it="Moderato" data-zh="&#36827;&#20013;"></div>
+          <div class="chip" onclick="toggleChip('bruit',this)" data-fr="&#201;lev&#233;" data-en="Loud" data-es="Ruidoso" data-de="Laut" data-it="Rumoroso" data-zh="&#22706;&#26434;"></div>
+          <div class="chip" onclick="toggleChip('bruit',this)" data-fr="Pas s&#251;r" data-en="Not sure" data-es="No s&#233;" data-de="Unsicher" data-it="Non so" data-zh="&#19981;&#30830;&#23450;"></div>
+        </div>
+      </div>
+
+      <!-- 9. ATTENTE -->
+      <div class="fsec">
+        <div class="flabel" id="t-attente-label"></div>
+        <div class="chips-wrap" id="chips-attente">
+          <div class="chip" onclick="toggleChip('attente',this)" data-fr="Moins de 10 min" data-en="Under 10 min" data-es="Menos de 10 min" data-de="Unter 10 Min." data-it="Meno di 10 min" data-zh="10&#20998;&#38047;&#20869;"></div>
+          <div class="chip" onclick="toggleChip('attente',this)" data-fr="10&#8211;20 min" data-en="10&#8211;20 min" data-es="10&#8211;20 min" data-de="10&#8211;20 Min." data-it="10&#8211;20 min" data-zh="10&#8211;20&#20998;&#38047;"></div>
+          <div class="chip" onclick="toggleChip('attente',this)" data-fr="20&#8211;30 min" data-en="20&#8211;30 min" data-es="20&#8211;30 min" data-de="20&#8211;30 Min." data-it="20&#8211;30 min" data-zh="20&#8211;30&#20998;&#38047;"></div>
+          <div class="chip" onclick="toggleChip('attente',this)" data-fr="Plus de 30 min" data-en="Over 30 min" data-es="M&#225;s de 30 min" data-de="&#220;ber 30 Min." data-it="Oltre 30 min" data-zh="30&#20998;&#38047;&#20197;&#19978;"></div>
+        </div>
+      </div>
+
+      <!-- 10. CONTACT -->
+      <div class="fsec">
+        <div class="flabel"><span id="t-contact-label"></span></div>
+        <div class="ctoggle">
+          <button class="ctbtn active" id="btn-email" onclick="switchContact('email')">&#128231; Email</button>
+          <button class="ctbtn" id="btn-phone" onclick="switchContact('phone')"></button>
+        </div>
+        <div id="field-email">
+          <input type="email" class="finput" id="contactEmail" autocomplete="email" placeholder="votre@email.com">
+        </div>
+        <div id="field-phone" style="display:none">
+          <input type="tel" class="finput" id="contactPhone" autocomplete="tel" placeholder="06 00 00 00 00">
+        </div>
+      </div>
+
+      <!-- 11. RGPD + SUBMIT -->
+      <div class="fsec" style="border-bottom:none;padding-bottom:40px">
+        <label class="rgpd-label" style="margin-bottom:22px;display:flex">
+          <input type="checkbox" id="rgpd" onchange="refreshSubmit()">
+          <span><span id="t-rgpd"></span><span style="color:#d93025;font-weight:700"> *</span></span>
+        </label>
+        <button class="btn-submit" id="btn-submit" onclick="submitForm()" disabled>
+          <span id="t-submit"></span>
+        </button>
+      </div>
+
     </div>
   </div>
+</div>
 
-  <div class="cta-section">
-    <p class="cta-label">
-      Vous avez aimé votre expérience ?<br>
-      <strong>Laissez-nous un avis Google en 30 secondes !</strong>
-    </p>
-    <a href="__LIEN_GOOGLE_REVIEW__" class="btn-review" target="_blank" rel="noopener">
-      ⭐ Laisser un avis Google
-      <div class="btn-sub">Ça nous aide énormément, merci !</div>
-    </a>
-  </div>
+<script>
+var GOOGLE_LINK   = '__LIEN_GOOGLE_REVIEW__';
+var WEBHOOK_FORM  = 'https://nicolasanquetin.app.n8n.cloud/webhook/mail-insatisfait';
+var WEBHOOK_CLICK = 'https://nicolasanquetin.app.n8n.cloud/webhook/tracking';
+var MANAGER_EMAIL = '__EMAIL_GERANT__';
+var NICOLAS_EMAIL = 'nicolasanquetin29@gmail.com,__EMAIL_GERANT__';
 
-  <div class="qr-section">
-    <p>Scanner pour accéder à cette page</p>
-    <img src="qr.png" alt="QR Code __NOM_RESTAURANT__" onerror="this.style.display='none'">
-  </div>
+/* ── TRANSLATIONS ── */
+var T = {
+  fr:{
+    g:{morning:'Merci pour votre petit-d&#233;jeuner &#9728;&#65039;',lunch:'Merci pour votre d&#233;jeuner &#127869;&#65039;',afternoon:'Merci pour votre passage &#9749;',dinner:'Merci pour votre d&#238;ner &#127769;',night:'Merci pour votre soir&#233;e &#10024;'},
+    question:'Comment s\'est pass&#233; votre moment chez nous ?',
+    subtext:'30 secondes &#8212; votre avis nous aide vraiment.',
+    ratingCount:'(2 847 avis)',
+    thanks:'&#10024; Merci&nbsp;! Redirection vers Google&#8230;',
+    formTitle:'Partagez votre exp&#233;rience',
+    starsLabel:'Note globale',
+    starsHints:['','Terrible','D&#233;cevant','Correct','Bien','Excellent&nbsp;!'],
+    catLabel:'D&#233;tail par cat&#233;gorie',
+    cats:{cuisine:'Cuisine',service:'Service',ambiance:'Ambiance',proprete:'Propret&#233;'},
+    mealLabel:'Type de repas',
+    budgetLabel:'Budget par personne',
+    serveurLabel:'Nom du serveur',
+    serveurPlaceholder:'Ex : Jean, Marie…',
+    bruitLabel:'Niveau sonore',
+    attenteLabel:'Temps d\'attente',
+    textareaLabel:'Votre commentaire',
+    placeholder:'Décrivez votre expérience…',
+    dateLabel:'Date de visite',
+    contactLabel:'Vos coordonn&#233;es',
+    phoneBtn:'&#128241; T&#233;l&#233;phone',
+    moisLabels:['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+    moisPlaceholder:'Mois',
+    anneePlaceholder:'Année',
+    rgpd:'J\'accepte que mes données soient transmises à l\'établissement __NOM_RESTAURANT__ afin de traiter mon retour, conformément au RGPD (Règlement UE 2016/679). Ces données ne seront ni conservées au-delà du strict nécessaire, ni cédées à des tiers.',
+    submit:'Publier mon avis',
+    successTitle:'Merci pour votre retour&nbsp;!',
+    successText:'Votre avis nous aide &#224; nous am&#233;liorer pour votre prochaine visite.',
+  },
+  en:{
+    g:{morning:'Thank you for breakfast &#9728;&#65039;',lunch:'Thank you for lunch &#127869;&#65039;',afternoon:'Thanks for stopping by &#9749;',dinner:'Thank you for dinner &#127769;',night:'Thank you for your evening &#10024;'},
+    question:'How was your experience with us?',
+    subtext:'30 seconds &#8212; your feedback means the world to us.',
+    ratingCount:'(__NB_AVIS__ reviews)',
+    thanks:'&#10024; Thank you! Redirecting to Google&#8230;',
+    formTitle:'Share your experience',
+    starsLabel:'Overall rating',
+    starsHints:['','Terrible','Poor','OK','Good','Excellent!'],
+    catLabel:'Category ratings',
+    cats:{cuisine:'Food',service:'Service',ambiance:'Atmosphere',proprete:'Cleanliness'},
+    mealLabel:'Meal type',
+    budgetLabel:'Budget per person',
+    serveurLabel:'Server name',
+    serveurPlaceholder:'E.g. John, Marie…',
+    bruitLabel:'Noise level',
+    attenteLabel:'Wait time',
+    textareaLabel:'Your comment',
+    placeholder:'Describe your experience…',
+    dateLabel:'Visit date',
+    contactLabel:'Your contact',
+    phoneBtn:'&#128241; Phone',
+    moisLabels:['January','February','March','April','May','June','July','August','September','October','November','December'],
+    moisPlaceholder:'Month',
+    anneePlaceholder:'Year',
+    rgpd:'I agree that my data will be transmitted to __NOM_RESTAURANT__ to process my feedback, in accordance with GDPR (EU Regulation 2016/679). Data will not be retained beyond what is strictly necessary, nor shared with third parties.',
+    submit:'Publish my review',
+    successTitle:'Thank you for your feedback!',
+    successText:'Your review truly helps us improve for your next visit.',
+  },
+  es:{
+    g:{morning:'Gracias por su desayuno &#9728;&#65039;',lunch:'Gracias por su almuerzo &#127869;&#65039;',afternoon:'Gracias por su visita &#9749;',dinner:'Gracias por su cena &#127769;',night:'Gracias por su velada &#10024;'},
+    question:'&#191;C&#243;mo fue su experiencia con nosotros?',
+    subtext:'30 segundos &#8212; su opini&#243;n nos ayuda mucho.',
+    ratingCount:'(__NB_AVIS__ rese&#241;as)',
+    thanks:'&#10024; &#161;Gracias! Redirigiendo a Google&#8230;',
+    formTitle:'Comparte tu experiencia',
+    starsLabel:'Valoraci&#243;n general',
+    starsHints:['','Terrible','Malo','Regular','Bien','&#161;Excelente!'],
+    catLabel:'Valoraci&#243;n por categor&#237;a',
+    cats:{cuisine:'Cocina',service:'Servicio',ambiance:'Ambiente',proprete:'Limpieza'},
+    mealLabel:'Tipo de comida',
+    budgetLabel:'Presupuesto por persona',
+    serveurLabel:'Nombre del camarero',
+    serveurPlaceholder:'Ej: Juan, Mar&#237;a&#8230;',
+    bruitLabel:'Nivel de ruido',
+    attenteLabel:'Tiempo de espera',
+    textareaLabel:'Tu comentario',
+    placeholder:'Describe tu experiencia&#8230;',
+    dateLabel:'Fecha de visita',
+    contactLabel:'Tus datos de contacto',
+    phoneBtn:'&#128241; Tel&#233;fono',
+    moisLabels:['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+    moisPlaceholder:'Mes',
+    anneePlaceholder:'A&#241;o',
+    rgpd:'Acepto que mis datos sean transmitidos a __NOM_RESTAURANT__ para gestionar mi comentario, de conformidad con el RGPD (Reglamento UE 2016/679). Los datos no se conservar&#225;n m&#225;s de lo estrictamente necesario ni se ceder&#225;n a terceros.',
+    submit:'Publicar mi opini&#243;n',
+    successTitle:'&#161;Gracias por tu opini&#243;n!',
+    successText:'Tu opini&#243;n nos ayuda a mejorar para tu pr&#243;xima visita.',
+  },
+  de:{
+    g:{morning:'Danke f&#252;r Ihr Fr&#252;hst&#252;ck &#9728;&#65039;',lunch:'Danke f&#252;r Ihr Mittagessen &#127869;&#65039;',afternoon:'Danke f&#252;r Ihren Besuch &#9749;',dinner:'Danke f&#252;r Ihr Abendessen &#127769;',night:'Danke f&#252;r Ihren Abend &#10024;'},
+    question:'Wie war Ihr Erlebnis bei uns?',
+    subtext:'30 Sekunden &#8212; Ihr Feedback hilft uns wirklich.',
+    ratingCount:'(__NB_AVIS__ Bewertungen)',
+    thanks:'&#10024; Danke! Weiterleitung zu Google&#8230;',
+    formTitle:'Teilen Sie Ihre Erfahrung',
+    starsLabel:'Gesamtbewertung',
+    starsHints:['','Schrecklich','Entt&#228;uschend','Okay','Gut','Ausgezeichnet!'],
+    catLabel:'Bewertung nach Kategorie',
+    cats:{cuisine:'K&#252;che',service:'Service',ambiance:'Atmosph&#228;re',proprete:'Sauberkeit'},
+    mealLabel:'Mahlzeit',
+    budgetLabel:'Budget pro Person',
+    serveurLabel:'Name des Kellners',
+    serveurPlaceholder:'Z.B. Jean, Marie&#8230;',
+    bruitLabel:'Ger&#228;uschpegel',
+    attenteLabel:'Wartezeit',
+    textareaLabel:'Ihr Kommentar',
+    placeholder:'Beschreiben Sie Ihre Erfahrung&#8230;',
+    dateLabel:'Besuchsdatum',
+    contactLabel:'Ihre Kontaktdaten',
+    phoneBtn:'&#128241; Telefon',
+    moisLabels:['Januar','Februar','M&#228;rz','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+    moisPlaceholder:'Monat',
+    anneePlaceholder:'Jahr',
+    rgpd:'Ich stimme zu, dass meine Daten an __NOM_RESTAURANT__ &#252;bermittelt werden, um mein Feedback gem&#228;&#223; DSGVO (EU-Verordnung 2016/679) zu bearbeiten. Die Daten werden nicht l&#228;nger als n&#246;tig aufbewahrt und nicht an Dritte weitergegeben.',
+    submit:'Meine Bewertung ver&#246;ffentlichen',
+    successTitle:'Danke f&#252;r Ihr Feedback!',
+    successText:'Ihre Bewertung hilft uns, Ihren n&#228;chsten Besuch zu verbessern.',
+  },
+  it:{
+    g:{morning:'Grazie per la sua colazione &#9728;&#65039;',lunch:'Grazie per il suo pranzo &#127869;&#65039;',afternoon:'Grazie per la sua visita &#9749;',dinner:'Grazie per la sua cena &#127769;',night:'Grazie per la sua serata &#10024;'},
+    question:'Com\'era la sua esperienza da noi?',
+    subtext:'30 secondi &#8212; la sua opinione ci aiuta davvero.',
+    ratingCount:'(__NB_AVIS__ recensioni)',
+    thanks:'&#10024; Grazie! Reindirizzamento a Google&#8230;',
+    formTitle:'Condividi la tua esperienza',
+    starsLabel:'Valutazione complessiva',
+    starsHints:['','Terribile','Deludente','Nella media','Bene','Eccellente!'],
+    catLabel:'Valutazione per categoria',
+    cats:{cuisine:'Cucina',service:'Servizio',ambiance:'Atmosfera',proprete:'Pulizia'},
+    mealLabel:'Tipo di pasto',
+    budgetLabel:'Budget a persona',
+    serveurLabel:'Nome del cameriere',
+    serveurPlaceholder:'Es: Jean, Marie&#8230;',
+    bruitLabel:'Livello di rumore',
+    attenteLabel:'Tempo di attesa',
+    textareaLabel:'Il tuo commento',
+    placeholder:'Descrivi la tua esperienza&#8230;',
+    dateLabel:'Data della visita',
+    contactLabel:'I tuoi contatti',
+    phoneBtn:'&#128241; Telefono',
+    moisLabels:['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
+    moisPlaceholder:'Mese',
+    anneePlaceholder:'Anno',
+    rgpd:'Accetto che i miei dati vengano trasmessi a __NOM_RESTAURANT__ per elaborare il mio feedback, in conformit&#224; con il GDPR (Regolamento UE 2016/679). I dati non saranno conservati oltre lo stretto necessario n&#233; ceduti a terzi.',
+    submit:'Pubblica la mia recensione',
+    successTitle:'Grazie per il tuo feedback!',
+    successText:'La tua recensione ci aiuta a migliorare per la tua prossima visita.',
+  },
+  zh:{
+    g:{morning:'&#24863;&#35874;&#24744;&#30340;&#26089;&#39�;&#20809;&#20020; &#9728;&#65039;',lunch:'&#24863;&#35874;&#24744;&#30340;&#21320;&#39�;&#20809;&#20020; &#127869;&#65039;',afternoon:'&#24863;&#35874;&#24744;&#30340;&#20551;&#20020; &#9749;',dinner:'&#24863;&#35874;&#24744;&#30340;&#26202;&#39057;&#20809;&#20020; &#127769;',night:'&#24863;&#35874;&#24744;&#20170;&#26202;&#30340;&#20809;&#20020; &#10024;'},
+    question:'&#24744;&#22312;&#25105;&#20204;&#39280;&#21333;&#30340;&#20307;&#39564;&#22914;&#20309;&#65311;',
+    subtext:'30&#31186; &#8212; &#24744;&#30340;&#35780;&#20215;&#23545;&#25105;&#20204;&#33267;&#20851;&#37325;&#35201;&#12290;',
+    ratingCount:'(__NB_AVIS__ &#26465;&#35780;&#20215;)',
+    thanks:'&#10024; &#35874;&#35874;&#65281;&#27491;&#22312;&#36339;&#36716;&#21040;Google&#8230;',
+    formTitle:'&#20998;&#20139;&#24744;&#30340;&#20307;&#39564;',
+    starsLabel:'&#24635;&#20307;&#35780;&#20998;',
+    starsHints:['','&#24456;&#24046;','&#36739;&#24046;','&#19968;&#33324;','&#22909;','&#26222;&#36890;&#26834;&#65281;'],
+    catLabel:'&#20998;&#31867;&#35780;&#20998;',
+    cats:{cuisine:'&#32993;&#39301;',service:'&#26381;&#21153;',ambiance:'&#27668;&#22278;',proprete:'&#28165;&#27905;'},
+    mealLabel:'&#39031;&#39154;&#31867;&#22411;',
+    budgetLabel:'&#20154;&#22343;&#28040;&#36153;',
+    serveurLabel:'服务员姓名',
+    serveurPlaceholder:'例如：让、玛丽…',
+    bruitLabel:'&#22768;&#39030;&#27700;&#24179;',
+    attenteLabel:'&#31561;&#24453;&#26102;&#38388;',
+    textareaLabel:'&#24744;&#30340;&#35780;&#35770;',
+    placeholder:'描述您的体验…',
+    dateLabel:'&#21040;&#35775;&#26085;&#26399;',
+    contactLabel:'&#24744;&#30340;&#32852;&#31995;&#26041;&#24335;',
+    phoneBtn:'&#128241; &#30005;&#35805;',
+    moisLabels:['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+    moisPlaceholder:'月份',
+    anneePlaceholder:'年份',
+    rgpd:'我同意将我的数据传输给__NOM_RESTAURANT__以处理我的反馈，符合GDPR（欧盟法规2016/679）。数据不会超出严格必要范围保存，也不会与第三方共享。',
+    submit:'&#21457;&#24067;&#25105;&#30340;&#35780;&#20215;',
+    successTitle:'&#24863;&#35874;&#24744;&#30340;&#21453;&#39304;&#65281;',
+    successText:'&#24744;&#30340;&#35780;&#20215;&#24110;&#21161;&#25105;&#20204;&#19981;&#26029;&#36827;&#27493;&#12290;',
+  }
+};
 
-  <div class="footer">
-    Page créée par AviStars · avistars.fr
-  </div>
+/* ── STATE ── */
+var lang = 'fr';
+var landingNote = 0;
+var formNote = 0;
+var catNotes = {cuisine:0,service:0,ambiance:0,proprete:0};
+var chipSel = {repas:null,budget:null,bruit:null,attente:null};
+var contactMode = 'email';
+
+/* ── LANG DETECT ── */
+function detectLang(){
+  var s = localStorage.getItem('avs_lang');
+  if(s && T[s]) return s;
+  var c = (navigator.language||'fr').toLowerCase().slice(0,2);
+  if(c==='zh') return 'zh';
+  if(c==='en') return 'en';
+  if(c==='es') return 'es';
+  if(c==='de') return 'de';
+  if(c==='it') return 'it';
+  return 'fr';
+}
+function setLang(l){
+  lang = l;
+  localStorage.setItem('avs_lang', l);
+  document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('btn-'+l).classList.add('active');
+  document.documentElement.lang = l;
+  render();
+  renderChips();
+}
+
+/* ── RENDER ── */
+function render(){
+  var t = T[lang];
+  var h = new Date().getHours();
+  var greet = h>=6&&h<11 ? t.g.morning : h>=11&&h<15 ? t.g.lunch : h>=15&&h<19 ? t.g.afternoon : h>=19&&h<23 ? t.g.dinner : t.g.night;
+  set('t-greeting', greet);
+  set('t-question', t.question);
+  set('t-subtext', t.subtext);
+  set('t-form-title', t.formTitle);
+  set('c-cuisine-lbl', t.cats.cuisine);
+  set('c-service-lbl', t.cats.service);
+  set('c-ambiance-lbl', t.cats.ambiance);
+  set('c-proprete-lbl', t.cats.proprete);
+  set('t-meal-label', t.mealLabel);
+  set('t-budget-label', t.budgetLabel);
+  set('t-serveur-label', t.serveurLabel);
+  document.getElementById('serveurNom').placeholder = t.serveurPlaceholder;
+  set('t-bruit-label', t.bruitLabel);
+  set('t-attente-label', t.attenteLabel);
+  document.getElementById('review-text').placeholder = t.placeholder;
+  set('t-date-label', t.dateLabel);
+  buildDateSelects(t);
+  set('t-contact-label', t.contactLabel);
+  document.getElementById('btn-phone').innerHTML = t.phoneBtn;
+  set('t-rgpd', t.rgpd);
+  set('t-submit', t.submit);
+  set('t-success-title', t.successTitle);
+  set('t-success-text', t.successText);
+  updateLandingHint(landingNote);
+  updateFormHint(formNote);
+}
+function set(id, html){
+  var el = document.getElementById(id);
+  if(el) el.innerHTML = html;
+}
+
+/* ── CHIP LABELS ── */
+function renderChips(){
+  ['repas','bruit','attente'].forEach(function(group){
+    document.querySelectorAll('#chips-'+group+' .chip').forEach(function(c){
+      var val = c.getAttribute('data-'+lang);
+      if(val) c.textContent = val;
+    });
+  });
+}
+
+/* ── TRACKING ── */
+function track(type, data){
+  var p = Object.assign({event:type,restaurant:'__NOM_RESTAURANT__',token:'avistars2026',ts:Date.now()}, data||{});
+  try{ navigator.sendBeacon(WEBHOOK_CLICK, JSON.stringify(p)); }catch(e){}
+}
+
+/* ── LANDING STARS ── */
+var lEls = ['ls1','ls2','ls3','ls4','ls5'].map(function(id){ return document.getElementById(id); });
+function renderLanding(v){
+  lEls.forEach(function(s,i){ s.style.color = i<v ? '#FFB800' : '#e0e0e0'; });
+}
+var HINTS = {
+  fr:['','Terrible','Décevant','Correct','Bien','Excellent !'],
+  en:['','Terrible','Poor','OK','Good','Excellent!'],
+  es:['','Terrible','Malo','Regular','Bien','¡Excelente!'],
+  de:['','Schrecklich','Enttäuschend','Okay','Gut','Ausgezeichnet!'],
+  it:['','Terribile','Deludente','Nella media','Bene','Eccellente!'],
+  zh:['','很差','较差','一般','好','极好！']
+};
+function updateLandingHint(v){
+  var el = document.getElementById('landingHint');
+  if(el) el.textContent = v>0 ? (HINTS[lang]||HINTS['fr'])[v] : ' ';
+}
+lEls.forEach(function(s,i){
+  s.addEventListener('mouseover', function(){
+    lEls.forEach(function(x,j){ x.style.color = j<=i ? '#FFB800' : '#e0e0e0'; });
+    document.getElementById('landingHint').textContent = (HINTS[lang]||HINTS['fr'])[i+1];
+  });
+  s.addEventListener('mouseleave', function(){
+    renderLanding(landingNote);
+    updateLandingHint(landingNote);
+  });
+});
+function landingStar(v){
+  landingNote = v;
+  renderLanding(v);
+  updateLandingHint(v);
+  track(v>=4 ? 'clic_positif' : 'clic_negatif', {note_landing:v});
+  if(v>=4){
+    document.getElementById('landingStars').style.pointerEvents='none';
+    var tm = document.getElementById('thanksMsg');
+    tm.innerHTML = T[lang].thanks;
+    tm.classList.add('show');
+    setTimeout(function(){ window.location.href = GOOGLE_LINK; }, 2200);
+  } else {
+    setTimeout(function(){ openForm(); setFStar(v); }, 300);
+  }
+}
+
+/* ── FORM OPEN / CLOSE ── */
+function openForm(){
+  document.getElementById('overlay').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeForm(){
+  document.getElementById('overlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+function overlayClick(e){
+  if(e.target===document.getElementById('overlay')) closeForm();
+}
+
+/* ── FORM STARS ── */
+function updateFormHint(v){
+  document.getElementById('fstar-hint').innerHTML = v>0 ? (T[lang].starsHints||HINTS['fr'])[v] : '';
+}
+function setFStar(v){
+  formNote = v;
+  for(var i=1;i<=5;i++){
+    document.getElementById('fs'+i).style.color = i<=v ? '#FFB800' : '#e0e0e0';
+  }
+  updateFormHint(v);
+  refreshSubmit();
+}
+
+/* ── CAT STARS ── */
+function setCat(cat, v){
+  catNotes[cat]=v;
+  document.querySelectorAll('#cat-'+cat+' .cstar').forEach(function(s,i){
+    s.style.color = i<v ? '#FFB800' : '#e0e0e0';
+  });
+}
+
+/* ── CHIPS ── */
+function toggleChip(group, el){
+  var wrap = document.getElementById('chips-'+group);
+  if(wrap) wrap.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('sel'); });
+  el.classList.add('sel');
+  // Toujours stocker la valeur FR (pour le sheet en français)
+  chipSel[group] = el.getAttribute('data-fr') || el.textContent.trim();
+}
+
+/* ── TEXTAREA ── */
+function onTextInput(){
+  var len = document.getElementById('review-text').value.length;
+  document.getElementById('char-count').textContent = len;
+}
+
+/* ── CONTACT ── */
+function switchContact(mode){
+  contactMode = mode;
+  document.getElementById('btn-email').classList.toggle('active', mode==='email');
+  document.getElementById('btn-phone').classList.toggle('active', mode==='phone');
+  document.getElementById('field-email').style.display = mode==='email' ? '' : 'none';
+  document.getElementById('field-phone').style.display = mode==='phone' ? '' : 'none';
+}
+
+/* ── SUBMIT ── */
+function refreshSubmit(){
+  document.getElementById('btn-submit').disabled = !(formNote>0 && document.getElementById('rgpd').checked);
+}
+
+/* ── DATE SELECTS ── */
+function buildDateSelects(t){
+  var now = new Date();
+  var mois = document.getElementById('selectMois');
+  var annee = document.getElementById('selectAnnee');
+  if(!mois||!annee) return;
+  mois.innerHTML = '<option value="">' + t.moisPlaceholder + '</option>';
+  t.moisLabels.forEach(function(m, i){
+    var opt = document.createElement('option');
+    opt.value = String(i+1).padStart(2,'0');
+    opt.textContent = m;
+    if(i === now.getMonth()) opt.selected = true;
+    mois.appendChild(opt);
+  });
+  annee.innerHTML = '<option value="">' + t.anneePlaceholder + '</option>';
+  for(var y = now.getFullYear(); y >= now.getFullYear()-2; y--){
+    var opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    if(y === now.getFullYear()) opt.selected = true;
+    annee.appendChild(opt);
+  }
+}
+
+/* ── SUBMIT FORM ── */
+function submitForm(){
+  var contact = contactMode==='email'
+    ? document.getElementById('contactEmail').value
+    : document.getElementById('contactPhone').value;
+  var payload = {
+    restaurant:'__NOM_RESTAURANT__',
+    manager_email:MANAGER_EMAIL,
+    nicolas_email:NICOLAS_EMAIL,
+    note_globale:formNote,
+    note_cuisine:catNotes.cuisine,
+    note_service:catNotes.service,
+    note_ambiance:catNotes.ambiance,
+    note_proprete:catNotes.proprete,
+    commentaire:document.getElementById('review-text').value.trim(),
+    date_visite:document.getElementById('selectMois').value + '/' + document.getElementById('selectAnnee').value,
+    type_repas:chipSel.repas,
+    budget:chipSel.budget,
+    serveur:document.getElementById('serveurNom').value.trim(),
+    bruit:chipSel.bruit,
+    attente:chipSel.attente,
+    contact_type:contactMode,
+    contact:contact,
+    lang:lang,
+    token:'avistars2026',
+    ts:new Date().toISOString()
+  };
+  var btn = document.getElementById('btn-submit');
+  btn.classList.add('loading');
+  btn.disabled = true;
+  fetch(WEBHOOK_FORM,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    .catch(function(){})
+    .finally(function(){
+      track('form_submitted',{note:formNote, contact_type:contact ? contactMode : '', contact:contact, commentaire:document.getElementById('review-text').value.trim()});
+      document.getElementById('form-body').classList.add('hidden');
+      document.getElementById('success').classList.add('visible');
+      setTimeout(closeForm, 4000);
+    });
+}
+
+/* ── INIT ── */
+window.addEventListener('load', function(){
+  var l = detectLang();
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('btn-'+l).classList.add('active');
+  document.documentElement.lang = l;
+  render();
+  renderChips();
+
+  // Scan QR — tracké à chaque ouverture de page
+  track('scan_qr', {});
+
+  setTimeout(function(){
+    var loader = document.getElementById('loader');
+    loader.style.opacity = '0';
+    setTimeout(function(){ loader.style.display='none'; }, 500);
+    document.getElementById('ri').classList.add('visible');
+    setTimeout(function(){ document.getElementById('card').classList.add('visible'); }, 220);
+  }, 1200);
+});
+</script>
 </body>
 </html>
