@@ -574,6 +574,7 @@ var formNote = 0;
 var catNotes = {cuisine:0,service:0,ambiance:0,proprete:0};
 var chipSel = {repas:null,budget:null,bruit:null,attente:null,serveur:null};
     // Initialiser chips serveur si configurés
+    var NSP = {fr:"Je ne sais pas",en:"Don't know",es:"No sé",de:"Weiß nicht",it:"Non so",zh:"不知道"};
     var SERVEURS_CFG = '__SERVEURS__';
     if (SERVEURS_CFG && SERVEURS_CFG.indexOf('__') === -1) {
       var srvNames = SERVEURS_CFG.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
@@ -582,7 +583,7 @@ var chipSel = {repas:null,budget:null,bruit:null,attente:null,serveur:null};
         srvWrap.style.display = 'flex';
         srvWrap.innerHTML = srvNames.map(function(n){
           return '<div class="chip" onclick="toggleChip(\'serveur\',this)">' + n + '</div>';
-        }).join('');
+        }).join('') + '<div class="chip" id="chip-nsp" onclick="toggleChip(\'serveur\',this)">' + (NSP[lang]||NSP.fr) + '</div>';
         document.getElementById('serveurNom').style.display = 'none';
       }
     }
@@ -654,6 +655,8 @@ function renderChips(){
       if(val) c.textContent = val;
     });
   });
+  var nspEl = document.getElementById('chip-nsp');
+  if (nspEl) nspEl.textContent = NSP[lang]||NSP.fr;
 }
 
 /* ── TRACKING ── */
